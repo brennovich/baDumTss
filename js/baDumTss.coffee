@@ -14,10 +14,6 @@ jQuery ->
 
     @$element = $ element
 
-    @setState = (_state) -> state = _state
-
-    @getState = -> state
-
     @getSetting = (key) ->
       @settings[key]
 
@@ -27,17 +23,17 @@ jQuery ->
     @init = ->
       @settings = $.extend({}, @defaults, options)
 
-      @setState 'ready'
-
     @init()
 
     @
 
   $.baDumTss::defaults =
-      message: 'Hello world'
+    listElement: 'ul'
+    scrollOffset: 120
+    expanderMargin: 50
 
   $.fn.baDumTss = (options) ->
-    this.each ->
-      if $(this).data('baDumTss') is undefined
-        plugin = new $.baDumTss(this, options)
-        $(this).data('baDumTss', plugin)
+    @each ->
+      if $(@).data('baDumTss') is undefined
+        plugin = new $.baDumTss(@, options)
+        $(@).data('baDumTss', plugin)

@@ -5,12 +5,6 @@
       state = '';
       this.settings = {};
       this.$element = $(element);
-      this.setState = function(_state) {
-        return state = _state;
-      };
-      this.getState = function() {
-        return state;
-      };
       this.getSetting = function(key) {
         return this.settings[key];
       };
@@ -21,14 +15,15 @@
         return this.settings[name].apply(this, args);
       };
       this.init = function() {
-        this.settings = $.extend({}, this.defaults, options);
-        return this.setState('ready');
+        return this.settings = $.extend({}, this.defaults, options);
       };
       this.init();
       return this;
     };
     $.baDumTss.prototype.defaults = {
-      message: 'Hello world'
+      listElement: 'ul',
+      scrollOffset: 120,
+      expanderMargin: 50
     };
     return $.fn.baDumTss = function(options) {
       return this.each(function() {
