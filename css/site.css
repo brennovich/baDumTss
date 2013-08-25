@@ -17,6 +17,37 @@ ul {
   margin: 2em 2em 0 0;
 }
 
+li a {
+  display: block;
+  position: relative;
+}
+
+li.active > a:after, .li.active > a:before {
+  top: auto;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  margin-top: -50px;
+}
+
+li.active > a:after {
+  border-color: rgba(244, 245, 246, 0);
+  border-bottom-color: #f4f5f6;
+  border-width: 30px;
+  left: 50%;
+  margin-left: -30px;
+}
+
+li.active > a:before {
+  border-color: rgba(69, 69, 69, 0);
+  border-bottom-color: #454545;
+  border-width: 33px;
+  left: 50%;
+  margin-left: -33px;
+}
 li a img {
   border-radius: 3px;
 }
