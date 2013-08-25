@@ -65,6 +65,14 @@
           "class": 'close',
           href: '#',
           text: 'X'
+        })[0].outerHTML + $('<a>', {
+          "class": 'prev',
+          href: '#',
+          text: '<'
+        })[0].outerHTML + $('<a>', {
+          "class": 'next',
+          href: '#',
+          text: '>'
         })[0].outerHTML;
       };
       this.buildExpander = function($el, $anchor) {
@@ -73,6 +81,7 @@
         $el.append(this.expanderMarkup());
         $el.find('.expander .expander-container').append(this.containerContentMarkup($anchor));
         this.bindCloseAction($el);
+        this.bindNavigation($el);
         $expander = $el.children('.expander');
         $details = $expander.find('.details');
         $img = $expander.find('img');
@@ -131,6 +140,27 @@
         return $el.find('a.close').click(function(e) {
           e.preventDefault();
           return $el.children('a').trigger('click');
+        });
+      };
+      this.bindNavigation = function($el) {
+        var _this = this;
+        $el.find('a.prev').click(function(e) {
+          var prevEl;
+          e.preventDefault();
+          prevEl = $el.prev('li').children('a');
+          prevEl.trigger('click');
+          if (!prevEl.length) {
+            return _this.$imageList.last().children('a').trigger('click');
+          }
+        });
+        return $el.find('a.next').click(function(e) {
+          var nextEl;
+          e.preventDefault();
+          nextEl = $el.next('li').children('a');
+          nextEl.trigger('click');
+          if (!nextEl.length) {
+            return _this.$imageList.first().children('a').trigger('click');
+          }
         });
       };
       this.init();

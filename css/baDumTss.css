@@ -62,3 +62,19 @@ a.close {
   text-align: center;
   border: 5px solid #f4f5f6;
 }
+
+a.prev, a.next {
+  position: absolute;
+  text-decoration: none;
+  color: #454545;
+}
+
+a.prev {
+  top: 40%;
+  left: -40px;
+}
+
+a.next {
+  top: 40%;
+  right: -40px;
+}

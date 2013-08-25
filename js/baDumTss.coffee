@@ -49,13 +49,14 @@ jQuery ->
 
     @expanderMarkup = -> $ '<div>', class: 'expander', html: $('<div>', class: 'expander-container')
 
-    @containerContentMarkup = ($anchor) -> $('<figure>', html: $('<img>', src: $anchor.prop('href')))[0].outerHTML + $('<div>', class: 'details')[0].outerHTML + $('<a>', class: 'close', href: '#', text: 'X')[0].outerHTML
+    @containerContentMarkup = ($anchor) -> $('<figure>', html: $('<img>', src: $anchor.prop('href')))[0].outerHTML + $('<div>', class: 'details')[0].outerHTML + $('<a>', class: 'close', href: '#', text: 'X')[0].outerHTML + $('<a>', class: 'prev', href: '#', text: '<')[0].outerHTML + $('<a>', class: 'next', href: '#', text: '>')[0].outerHTML
 
     @buildExpander = ($el, $anchor) ->
       $el.append @expanderMarkup()
       $el.find('.expander .expander-container').append @containerContentMarkup($anchor)
 
       @bindCloseAction $el
+      @bindNavigation $el
 
       $expander = $el.children('.expander')
       $details = $expander.find('.details')
@@ -100,10 +101,23 @@ jQuery ->
 
       removeAction() if $expander.length
 
-    @bindCloseAction = ($el)->
+    @bindCloseAction = ($el) ->
       $el.find('a.close').click (e) ->
         e.preventDefault()
         $el.children('a').trigger 'click'
+
+    @bindNavigation = ($el) ->
+      $el.find('a.prev').click (e) =>
+        e.preventDefault()
+        prevEl = $el.prev('li').children 'a'
+        prevEl.trigger 'click'
+        @$imageList.last().children('a').trigger 'click' unless prevEl.length
+
+      $el.find('a.next').click (e) =>
+        e.preventDefault()
+        nextEl = $el.next('li').children 'a'
+        nextEl.trigger 'click'
+        @$imageList.first().children('a').trigger 'click' unless nextEl.length
 
     @init()
 
