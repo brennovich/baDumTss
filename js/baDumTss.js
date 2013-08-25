@@ -19,6 +19,7 @@
       };
       this.init = function() {
         this.settings = $.extend({}, this.defaults, options);
+        this.settings.spinConfig.top = this.settings.expanderHeight * 0.4;
         this.$imageList = this.$element.find(this.settings.listSelector);
         this.bindImageAnchorEvents();
         return this.setState('ready');
@@ -73,6 +74,7 @@
         $details = $expander.find('.details');
         $img = $expander.find('img');
         $expander.height(this.settings.expanderHeight);
+        $expander.spin(this.settings.spinConfig);
         $el.height(this.settings.expanderHeight + $el.height());
         $img.height($expander.find('figure').height);
         return $img.load(function() {
@@ -83,6 +85,7 @@
           }));
           $details.css('opacity', 1);
           $img.css('opacity', 1);
+          $expander.spin(false);
           return _this.focusToEl($el);
         });
       };
@@ -99,23 +102,27 @@
         }, 'fast');
       };
       this.removeExpander = function($expander, callback, args) {
-        var _this = this;
+        var removeAction,
+          _this = this;
         if (args == null) {
           args = [];
         }
-        $expander.on('webkitAnimationEnd transitionend', function() {
+        removeAction = function() {
           $expander.parent().height('auto');
           $expander.remove();
           if (callback) {
             return callback.apply(_this, args);
           }
-        });
+        };
         $expander.parent().removeClass('active');
         $expander.html('');
-        return $expander.css({
+        $expander.css({
           height: 0,
           opacity: 0
         });
+        if ($expander.length) {
+          return removeAction();
+        }
       };
       this.init();
       return this;
@@ -123,7 +130,24 @@
     $.baDumTss.prototype.defaults = {
       listSelector: 'ul li',
       scrollOffset: 120,
-      expanderHeight: 350
+      expanderHeight: 350,
+      spinConfig: {
+        lines: 9,
+        length: 0,
+        width: 12,
+        radius: 17,
+        corners: 1,
+        rotate: 24,
+        direction: 1,
+        color: '#454545',
+        speed: 0.8,
+        trail: 62,
+        shadow: false,
+        hwaccel: true,
+        className: 'spinner',
+        zIndex: 2e9,
+        left: 'auto'
+      }
     };
     return $.fn.baDumTss = function(options) {
       return this.each(function() {

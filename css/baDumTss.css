@@ -5,6 +5,7 @@
   background-color: #f4f5f6;
   height: 0;
   transition: height 300ms ease-in-out, opacity 300ms linear;
+  -webkit-transition: height 300ms ease-in-out, opacity 300ms linear;
   z-index: -1;
 }
 
@@ -32,6 +33,7 @@ figure img {
   max-height: 308px;
   opacity: 0;
   transition: opacity 800ms ease-in-out;
+  -webkit-transition: opacity 800ms ease-in-out;
 }
 
 .details {
@@ -41,6 +43,7 @@ figure img {
   text-align: right;
   opacity: 0;
   transition: opacity 500ms ease-in-out;
+  -webkit-transition: opacity 500ms ease-in-out;
 }
 
 a.close {
