@@ -10,6 +10,12 @@ module.exports = function(grunt) {
           src: '*.js',
           dest: 'dist/',
           ext: '.min.js'
+        }, {
+          expand: true,
+          cwd: 'js/libs',
+          src: 'spin.js',
+          dest: 'dist/',
+          ext: '.min.js'
         }],
         options: {
           banner : '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
