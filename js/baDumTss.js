@@ -46,37 +46,40 @@
           return this.buildExpander($listItem, $anchor);
         }
       };
-      this.buildExpander = function($el, $anchor) {
-        var $details, $expander, $img,
-          _this = this;
-        $('<div>', {
+      this.expanderMarkup = function() {
+        return $('<div>', {
           "class": 'expander',
           html: $('<div>', {
             "class": 'expander-container'
           })
-        }).appendTo($el);
-        $el.find('.expander .expander-container').append($('<figure>', {
+        });
+      };
+      this.containerContentMarkup = function($anchor) {
+        return $('<figure>', {
           html: $('<img>', {
             src: $anchor.prop('href')
           })
-        })).append($('<div>', {
+        })[0].outerHTML + $('<div>', {
           "class": 'details'
-        })).append($('<a>', {
+        })[0].outerHTML + $('<a>', {
           "class": 'close',
           href: '#',
           text: 'X'
-        }));
-        $el.find('a.close').click(function(e) {
-          e.preventDefault();
-          return $anchor.trigger('click');
-        });
+        })[0].outerHTML;
+      };
+      this.buildExpander = function($el, $anchor) {
+        var $details, $expander, $img,
+          _this = this;
+        $el.append(this.expanderMarkup());
+        $el.find('.expander .expander-container').append(this.containerContentMarkup($anchor));
+        this.bindCloseAction($el);
         $expander = $el.children('.expander');
         $details = $expander.find('.details');
         $img = $expander.find('img');
         $expander.height(this.settings.expanderHeight);
-        $expander.spin(this.settings.spinConfig);
         $el.height(this.settings.expanderHeight + $el.height());
         $img.height($expander.find('figure').height);
+        $expander.spin(this.settings.spinConfig);
         return $img.load(function() {
           $details.append($('<h3>', {
             html: $anchor.children('img').prop('title')
@@ -123,6 +126,12 @@
         if ($expander.length) {
           return removeAction();
         }
+      };
+      this.bindCloseAction = function($el) {
+        return $el.find('a.close').click(function(e) {
+          e.preventDefault();
+          return $el.children('a').trigger('click');
+        });
       };
       this.init();
       return this;

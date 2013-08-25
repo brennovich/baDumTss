@@ -47,13 +47,13 @@ jQuery ->
       else
         @buildExpander $listItem, $anchor
 
-    @expanderMarkup = $ '<div>', class: 'expander' html: $('<div>', class: 'expander-container')
+    @expanderMarkup = -> $ '<div>', class: 'expander', html: $('<div>', class: 'expander-container')
 
-    @containerContentMarkup = $ '<figure>', html: $('<img>', src: $anchor.prop('href')).append($('<div>', class: 'details')).append $('<a>', class: 'close', href: '#', text: 'X')
+    @containerContentMarkup = ($anchor) -> $('<figure>', html: $('<img>', src: $anchor.prop('href')))[0].outerHTML + $('<div>', class: 'details')[0].outerHTML + $('<a>', class: 'close', href: '#', text: 'X')[0].outerHTML
 
     @buildExpander = ($el, $anchor) ->
-      @expanderMarkup.appendTo $el
-      $el.find('.expander .expander-container').append @containerContentMarkup
+      $el.append @expanderMarkup()
+      $el.find('.expander .expander-container').append @containerContentMarkup($anchor)
 
       @bindCloseAction $el
 
