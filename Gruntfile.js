@@ -8,7 +8,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'js/',
           src: '*.js',
-          dest: 'js/',
+          dest: 'dist/',
           ext: '.min.js'
         }],
         options: {
