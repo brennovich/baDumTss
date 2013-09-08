@@ -1,3 +1,6 @@
 .grunt/
 node_modules/
 _SpecRunner.html
+spec/javascripts/*.js
+spec/javascripts/helpers
+
